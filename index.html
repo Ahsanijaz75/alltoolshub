@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free online tools for calculations, QR codes, word counting and more.">
+<title>AllToolsHub - Free Online Tools</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#182238}
+header{background:#1457d9;color:white;padding:28px 15px;text-align:center}
+header h1{margin:0;font-size:32px}
+header p{margin-bottom:0}
+main{max-width:900px;margin:22px auto;padding:0 14px}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:white;padding:20px;border-radius:14px;box-shadow:0 3px 14px #0000000d}
+.card h2{font-size:20px;margin-top:0;color:#1457d9}
+input,textarea,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ccd4e0;border-radius:8px;font-size:16px}
+textarea{min-height:100px;resize:vertical}
+button{background:#1457d9;color:white;border:0;font-weight:bold;cursor:pointer}
+button:hover{background:#0b3fa7}
+.result{font-weight:bold;color:#087443;overflow-wrap:anywhere}
+footer{text-align:center;padding:25px;color:#586579}
+#qrcode{margin-top:12px;overflow-wrap:anywhere}
+</style>
+</head>
+
+<body>
+<header>
+<h1>AllToolsHub</h1>
+<p>Free Online Tools — Simple, Fast and Useful!</p>
+</header>
+
+<main>
+<div class="tools">
+
+<section class="card">
+<h2>Percentage Calculator</h2>
+<label>Enter total number</label>
+<input type="number" id="total" placeholder="e.g. 1100">
+<label>Enter obtained number</label>
+<input type="number" id="obtained" placeholder="e.g. 750">
+<button onclick="percentage()">Calculate Percentage</button>
+<p class="result" id="percentResult"></p>
+</section>
+
+<section class="card">
+<h2>Age Calculator</h2>
+<label>Enter your date of birth</label>
+<input type="date" id="dob">
+<button onclick="calculateAge()">Calculate Age</button>
+<p class="result" id="ageResult"></p>
+</section>
+
+<section class="card">
+<h2>BMI Calculator</h2>
+<label>Weight in kilograms</label>
+<input type="number" id="weight" placeholder="e.g. 75">
+<label>Height in centimetres</label>
+<input type="number" id="height" placeholder="e.g. 175">
+<button onclick="calculateBMI()">Calculate BMI</button>
+<p class="result" id="bmiResult"></p>
+</section>
+
+<section class="card">
+<h2>Word Counter</h2>
+<label>Enter or paste your text</label>
+<textarea id="textInput" placeholder="Type your text here..."></textarea>
+<button onclick="countWords()">Count Words</button>
+<p class="result" id="wordResult"></p>
+</section>
+
+<section class="card">
+<h2>QR Code Generator</h2>
+<label>Enter a website link or text</label>
+<input type="text" id="qrText" placeholder="https://example.com">
+<button onclick="makeQR()">Generate QR Code</button>
+<div id="qrcode"></div>
+<p id="qrMessage"></p>
+</section>
+
+</div>
+</main>
+
+<footer>
+<p>© 2026 AllToolsHub | Free Online Tools</p>
+<p>Useful tools for everyday life.</p>
+</footer>
+
+<script>
+function percentage(){
+ const t=Number(document.getElementById('total').value);
+ const o=Number(document.getElementById('obtained').value);
+ const r=document.getElementById('percentResult');
+ if(t<=0||document.getElementById('total').value===''||document.getElementById('obtained').value===''||o<0){
+ r.textContent='Please enter valid numbers.';return;
+ }
+ r.textContent='Percentage: '+((o/t)*100).toFixed(2)+'%';
+}
+
+function calculateAge(){
+ const value=document.getElementById('dob').value;
+ const r=document.getElementById('ageResult');
+ if(!value){r.textContent='Please select your date of birth.';return;}
+ const birth=new Date(value+'T00:00:00');
+ const today=new Date();
+ if(birth>today){r.textContent='Date of birth cannot be in the future.';return;}
+ let years=today.getFullYear()-birth.getFullYear();
+ let months=today.getMonth()-birth.getMonth();
+ let days=today.getDate()-birth.getDate();
+ if(days<0){
+ months--;
+ days=new Date(today.getFullYear(),today.getMonth(),0).getDate()+days;
+ }
+ if(months<0){years--;months+=12;}
+ r.textContent='Your age: '+years+' years, '+months+' months and '+days+' days.';
+}
+
+function calculateBMI(){
+ const w=Number(document.getElementById('weight').value);
+ const h=Number(document.getElementById('height').value)/100;
+ const r=document.getElementById('bmiResult');
+ if(w<=0||h<=0){r.textContent='Please enter a valid weight and height.';return;}
+ const bmi=w/(h*h);
+ let category='';
+ if(bmi<18.5)category='Underweight';
+ else if(bmi<25)category='Normal range';
+ else if(bmi<30)category='Overweight';
+ else category='Obesity range';
+ r.textContent='BMI: '+bmi.toFixed(1)+' — '+category+'.';
+}
+
+function countWords(){
+ const text=document.getElementById('textInput').value.trim();
+ const words=text?text.split(/\s+/).length:0;
+ const chars=document.getElementById('textInput').value.length;
+ document.getElementById('wordResult').textContent='Words: '+words+' | Characters: '+chars;
+}
+
+function makeQR(){
+ const value=document.getElementById('qrText').value.trim();
+ const box=document.getElementById('qrcode');
+ const message=document.getElementById('qrMessage');
+ box.innerHTML='';
+ message.textContent='';
+ if(!value){message.textContent='Please enter a link or text.';return;}
+ if(typeof QRCode==='undefined'){
+ message.textContent='QR tool is loading or unavailable. Check your internet connection and reload the page.';
+ return;
+ }
+ new QRCode(box,{text:value,width:180,height:180});
+ message.textContent='Your QR code is ready. Take a screenshot to save it.';
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+  </html>
