@@ -112,9 +112,21 @@ function percentage(){
 }
 
 function calculateAge(){
- const value=document.getElementById('dob').value;
- const r=document.getElementById('ageResult');
- function updateHeightInput(){
+const value=document.getElementById('dob').value;
+const r=document.getElementById('ageResult');
+if(!value){r.textContent='Please enter your date of birth.';return;}
+const dob=new Date(value);
+const today=new Date();
+if(Number.isNaN(dob.getTime())||dob>today){r.textContent='Please enter a valid date of birth.';return;}
+let years=today.getFullYear()-dob.getFullYear();
+let months=today.getMonth()-dob.getMonth();
+let days=today.getDate()-dob.getDate();
+if(days<0){months--;days+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}
+if(months<0){years--;months+=12;}
+r.textContent='Age: '+years+' years, '+months+' months, '+days+' days.';
+}
+
+function updateHeightInput(){
 const unit=document.getElementById('heightUnit').value;
 document.getElementById('heightCmField').style.display=unit==='cm'?'block':'none';
 document.getElementById('heightFtField').style.display=unit==='ft'?'block':'none';
@@ -159,20 +171,6 @@ else category='Obesity range';
 
 r.textContent='BMI: '+bmi.toFixed(1)+' — '+category+'.';
  }
-
-function calculateBMI(){
- const w=Number(document.getElementById('weight').value);
- const h=Number(document.getElementById('height').value)/100;
- const r=document.getElementById('bmiResult');
- if(w<=0||h<=0){r.textContent='Please enter a valid weight and height.';return;}
- const bmi=w/(h*h);
- let category='';
- if(bmi<18.5)category='Underweight';
- else if(bmi<25)category='Normal range';
- else if(bmi<30)category='Overweight';
- else category='Obesity range';
- r.textContent='BMI: '+bmi.toFixed(1)+' — '+category+'.';
-}
 
 function countWords(){
  const text=document.getElementById('textInput').value.trim();
