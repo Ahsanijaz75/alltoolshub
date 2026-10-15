@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ahsanijaz75.github.io/alltoolshub/sitemap.xml
