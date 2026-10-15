@@ -93,6 +93,12 @@ footer{text-align:center;padding:25px;color:#586579}
 <input type="text" id="qrText" placeholder="https://example.com">
 <button onclick="makeQR()">Generate QR Code</button>
 <div id="qrcode"></div>
+
+<div id="qrActions" style="display:none; margin-top:15px;">
+  <button onclick="downloadQR()">Download QR Code</button>
+  <button onclick="shareQR()">Share QR Code</button>
+</div>
+
 <p id="qrMessage"></p>
 </section>
 
