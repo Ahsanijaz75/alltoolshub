@@ -58,8 +58,23 @@ footer{text-align:center;padding:25px;color:#586579}
 <h2>BMI Calculator</h2>
 <label>Weight in kilograms</label>
 <input type="number" id="weight" placeholder="e.g. 75">
+<label for="heightUnit">Height Unit</label>
+<select id="heightUnit" onchange="updateHeightInput()" style="width:100%;padding:12px;margin:7px 0;border:1px solid #ccd4e0;border-radius:8px;font-size:16px;">
+<option value="cm">Centimetres (cm)</option>
+<option value="ft">Feet and Inches (ft/in)</option>
+</select>
+
+<div id="heightCmField">
 <label>Height in centimetres</label>
 <input type="number" id="height" placeholder="e.g. 175">
+</div>
+
+<div id="heightFtField" style="display:none;">
+<label>Feet</label>
+<input type="number" id="heightFeet" placeholder="e.g. 5">
+<label>Inches</label>
+<input type="number" id="heightInches" placeholder="e.g. 9">
+</div>
 <button onclick="calculateBMI()">Calculate BMI</button>
 <p class="result" id="bmiResult"></p>
 </section>
@@ -99,20 +114,51 @@ function percentage(){
 function calculateAge(){
  const value=document.getElementById('dob').value;
  const r=document.getElementById('ageResult');
- if(!value){r.textContent='Please select your date of birth.';return;}
- const birth=new Date(value+'T00:00:00');
- const today=new Date();
- if(birth>today){r.textContent='Date of birth cannot be in the future.';return;}
- let years=today.getFullYear()-birth.getFullYear();
- let months=today.getMonth()-birth.getMonth();
- let days=today.getDate()-birth.getDate();
- if(days<0){
- months--;
- days=new Date(today.getFullYear(),today.getMonth(),0).getDate()+days;
- }
- if(months<0){years--;months+=12;}
- r.textContent='Your age: '+years+' years, '+months+' months and '+days+' days.';
+ function updateHeightInput(){
+const unit=document.getElementById('heightUnit').value;
+document.getElementById('heightCmField').style.display=unit==='cm'?'block':'none';
+document.getElementById('heightFtField').style.display=unit==='ft'?'block':'none';
 }
+
+function calculateBMI(){
+const w=Number(document.getElementById('weight').value);
+const unit=document.getElementById('heightUnit').value;
+const r=document.getElementById('bmiResult');
+let h=0;
+
+if(unit==='cm'){
+h=Number(document.getElementById('height').value)/100;
+}else{
+const feetValue=document.getElementById('heightFeet').value;
+const inchesValue=document.getElementById('heightInches').value;
+const feet=feetValue===''?0:Number(feetValue);
+const inches=inchesValue===''?0:Number(inchesValue);
+
+if(feetValue===''&&inchesValue===''){
+r.textContent='Please enter your height in feet and inches.';
+return;
+}
+if(feet<0||feet>8||inches<0||inches>=12){
+r.textContent='Please enter a valid height in feet and inches.';
+return;
+}
+h=(feet*12+inches)*0.0254;
+}
+
+if(w<=0||!Number.isFinite(w)||h<=0||!Number.isFinite(h)){
+r.textContent='Please enter a valid weight and height.';
+return;
+}
+
+const bmi=w/(h*h);
+let category='';
+if(bmi<18.5)category='Underweight';
+else if(bmi<25)category='Normal range';
+else if(bmi<30)category='Overweight';
+else category='Obesity range';
+
+r.textContent='BMI: '+bmi.toFixed(1)+' — '+category+'.';
+ }
 
 function calculateBMI(){
  const w=Number(document.getElementById('weight').value);
