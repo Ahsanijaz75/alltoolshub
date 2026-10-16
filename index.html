@@ -118,10 +118,40 @@ footer{text-align:center;padding:25px;color:#586579}
 </section>
 <section class="card">
   <h2>Password Generator</h2>
-  <p>Generate strong passwords for your accounts.</p>
-  <a href="password-generator.html" style="display:block;text-align:center;background:#eaf3ff;color:#1457d9;padding:12px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:12px;">
-    Open Full Password Generator →
-  </a>
+  <p>Generate a strong password for your accounts.</p>
+
+  <label for="passwordLength">Password Length</label>
+  <input type="number" id="passwordLength" value="16" min="8" max="64">
+
+  <label>
+    <input type="checkbox" id="passUpper" checked style="width:auto;">
+    Capital Letters (A-Z)
+  </label>
+
+  <label>
+    <input type="checkbox" id="passLower" checked style="width:auto;">
+    Small Letters (a-z)
+  </label>
+
+  <label>
+    <input type="checkbox" id="passNumbers" checked style="width:auto;">
+    Numbers (0-9)
+  </label>
+
+  <label>
+    <input type="checkbox" id="passSymbols" checked style="width:auto;">
+    Symbols (!@#$%)
+  </label>
+
+  <button onclick="generateHomePassword()">Generate Password</button>
+
+  <label for="homePasswordResult">Your Password</label>
+  <input type="text" id="homePasswordResult" readonly
+         placeholder="Your password will appear here">
+
+  <button onclick="copyHomePassword()">Copy Password</button>
+
+  <p class="result" id="homePasswordMessage"></p>
 </section>
 </div>
 </main>
