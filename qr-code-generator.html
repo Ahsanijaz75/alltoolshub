@@ -117,10 +117,38 @@ document.getElementById("generateBtn").addEventListener("click", function() {
   downloadLink.style.display = "none";
   downloadLink.download = "alltoolshub-qr-code.png";
 
-    image.onload = function() {
+      image.onload = function() {
     message.textContent = "Your QR code is ready!";
     downloadLink.href = image.src;
+    downloadLink.textContent = "Download QR Code";
     downloadLink.download = "alltoolshub-qr-code.png";
+    downloadLink.target = "_self";
+    downloadLink.onclick = async function(event) {
+      event.preventDefault();
+
+      try {
+        const response = await fetch(image.src);
+        if (!response.ok) throw new Error("Download failed");
+
+        const blob = await response.blob();
+        const fileURL = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = fileURL;
+        link.download = "alltoolshub-qr-code.png";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(fileURL), 2000);
+        message.textContent = "QR code download started!";
+      } catch (error) {
+        message.textContent =
+          "Download failed. Open the QR image and save it manually.";
+        window.open(image.src, "_blank");
+      }
+    };
+
     downloadLink.style.display = "inline-block";
   };
   image.onerror = function() {
