@@ -300,6 +300,90 @@ async function shareQR(){
   message.textContent='Please generate a QR code first.';
   return;
  }
+ function generateHomePassword() {
+  const length = Number(document.getElementById('passwordLength').value);
+  const result = document.getElementById('homePasswordResult');
+  const message = document.getElementById('homePasswordMessage');
+
+  const groups = [];
+
+  if (document.getElementById('passUpper').checked)
+    groups.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+  if (document.getElementById('passLower').checked)
+    groups.push('abcdefghijklmnopqrstuvwxyz');
+
+  if (document.getElementById('passNumbers').checked)
+    groups.push('0123456789');
+
+  if (document.getElementById('passSymbols').checked)
+    groups.push('!@#$%^&*()-_=+[]{}?');
+
+  result.value = '';
+  message.textContent = '';
+
+  if (!Number.isInteger(length) || length < 8 || length > 64) {
+    message.textContent = 'Choose a password length between 8 and 64.';
+    return;
+  }
+
+  if (groups.length === 0) {
+    message.textContent = 'Please select at least one character type.';
+    return;
+  }
+
+  if (!window.crypto || !window.crypto.getRandomValues) {
+    message.textContent = 'Secure password generation is unavailable in this browser.';
+    return;
+  }
+
+  const allChars = groups.join('');
+  const randomValues = new Uint32Array(length);
+  crypto.getRandomValues(randomValues);
+
+  const passwordChars = [];
+
+  // Include at least one character from every selected group.
+  groups.forEach(group => {
+    passwordChars.push(group[randomValues[passwordChars.length] % group.length]);
+  });
+
+  while (passwordChars.length < length) {
+    const index = passwordChars.length;
+    passwordChars.push(allChars[randomValues[index] % allChars.length]);
+  }
+
+  // Shuffle the password characters.
+  for (let i = passwordChars.length - 1; i > 0; i--) {
+    const random = new Uint32Array(1);
+    crypto.getRandomValues(random);
+    const j = random[0] % (i + 1);
+    [passwordChars[i], passwordChars[j]] =
+      [passwordChars[j], passwordChars[i]];
+  }
+
+  result.value = passwordChars.join('');
+  message.textContent = 'Password generated successfully.';
+}
+
+async function copyHomePassword() {
+  const result = document.getElementById('homePasswordResult');
+  const message = document.getElementById('homePasswordMessage');
+
+  if (!result.value) {
+    message.textContent = 'Please generate a password first.';
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(result.value);
+    message.textContent = 'Password copied successfully.';
+  } catch (error) {
+    result.focus();
+    result.select();
+    message.textContent = 'Password select ho gaya hai. Copy option use karein.';
+  }
+ }
 
  try{
   const response=await fetch(dataURL);
