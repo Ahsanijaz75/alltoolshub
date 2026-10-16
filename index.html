@@ -300,6 +300,35 @@ async function shareQR(){
   message.textContent='Please generate a QR code first.';
   return;
  }
+ 
+
+ try{
+  const response=await fetch(dataURL);
+  const blob=await response.blob();
+  const file=new File([blob],'alltoolshub-qr-code.png',{
+   type:'image/png'
+  });
+
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+   await navigator.share({
+    files:[file],
+    title:'My QR Code',
+    text:'QR code created with AllToolsHub'
+   });
+  }else if(navigator.share){
+   await navigator.share({
+    title:'My QR Code',
+    text:'QR code: '+document.getElementById('qrText').value.trim()
+   });
+  }else{
+   message.textContent='Sharing is not supported here. Please download and share the QR code manually.';
+  }
+ }catch(error){
+  if(error.name!=='AbortError'){
+   message.textContent='Could not share automatically. Please download the QR code and share it manually.';
+  }
+ }
+ }
  function generateHomePassword() {
   const length = Number(document.getElementById('passwordLength').value);
   const result = document.getElementById('homePasswordResult');
@@ -383,34 +412,6 @@ async function copyHomePassword() {
     result.select();
     message.textContent = 'Password select ho gaya hai. Copy option use karein.';
   }
- }
-
- try{
-  const response=await fetch(dataURL);
-  const blob=await response.blob();
-  const file=new File([blob],'alltoolshub-qr-code.png',{
-   type:'image/png'
-  });
-
-  if(navigator.canShare && navigator.canShare({files:[file]})){
-   await navigator.share({
-    files:[file],
-    title:'My QR Code',
-    text:'QR code created with AllToolsHub'
-   });
-  }else if(navigator.share){
-   await navigator.share({
-    title:'My QR Code',
-    text:'QR code: '+document.getElementById('qrText').value.trim()
-   });
-  }else{
-   message.textContent='Sharing is not supported here. Please download and share the QR code manually.';
-  }
- }catch(error){
-  if(error.name!=='AbortError'){
-   message.textContent='Could not share automatically. Please download the QR code and share it manually.';
-  }
- }
  }
 </script>
 
