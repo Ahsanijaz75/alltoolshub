@@ -120,7 +120,10 @@ document.getElementById("generateBtn").addEventListener("click", function() {
   image.onload = function() {
     image.onload = function() {
   message.textContent = "Your QR code is ready!";
-  downloadLink.href = image.src;
+
+      downloadLink.href = image.src + "&download=1";
+  downloadLink.removeAttribute("download");
+  downloadLink.onclick = null;
   downloadLink.style.display = "inline-block";
 };
 
