@@ -117,8 +117,7 @@ document.getElementById("generateBtn").addEventListener("click", function() {
   downloadLink.style.display = "none";
   downloadLink.download = "alltoolshub-qr-code.png";
 
-  image.onload = function() {
-      image.onload = function() {
+    image.onload = function() {
     message.textContent = "Your QR code is ready!";
     downloadLink.href = image.src;
     downloadLink.download = "alltoolshub-qr-code.png";
