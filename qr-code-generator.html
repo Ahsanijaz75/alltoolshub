@@ -118,10 +118,11 @@ document.getElementById("generateBtn").addEventListener("click", function() {
   downloadLink.download = "alltoolshub-qr-code.png";
 
   image.onload = function() {
-    message.textContent = "Your QR code is ready!";
-    downloadLink.href = image.src;
-    downloadLink.style.display = "inline-block";
-  };
+    image.onload = function() {
+  message.textContent = "Your QR code is ready!";
+  downloadLink.href = image.src;
+  downloadLink.style.display = "inline-block";
+};
 
   image.onerror = function() {
     message.textContent =
