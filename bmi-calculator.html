@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BMI Calculator - Free Body Mass Index Calculator | AllToolsHub</title>
+  <meta name="description" content="Calculate your Body Mass Index (BMI) for free using your weight and height. Supports kilograms, centimetres, feet and inches.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ahsanijaz75.github.io/alltoolshub/bmi-calculator.html">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1769e0;
+      color: white;
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; }
+
+    nav {
+      background: white;
+      padding: 13px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    a {
+      color: #1769e0;
+      text-decoration: none;
+    }
+
+    nav a, footer a { font-weight: bold; }
+
+    main {
+      max-width: 760px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    h2 { color: #1769e0; margin-top: 0; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 6px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 7px;
+    }
+
+    input, select { border: 1px solid #ccc; background: white; }
+
+    button {
+      margin-top: 16px;
+      border: none;
+      background: #1769e0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #0d50b5; }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 15px;
+      background: #eaf3ff;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .note { color: #555; font-size: 14px; }
+
+    footer {
+      text-align: center;
+      padding: 22px 12px;
+      background: #e9eef6;
+      margin-top: 30px;
+    }
+
+    footer a { margin: 0 5px; }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 23px; }
+      .card { padding: 17px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>BMI Calculator</h1>
+    <p>Calculate your Body Mass Index for free.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">← Back to AllToolsHub Home</a>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2>Calculate Your BMI</h2>
+      <p>Enter your weight and height to calculate your Body Mass Index.</p>
+
+      <form id="bmiForm">
+        <label for="weight">Weight (kilograms)</label>
+        <input type="number" id="weight" min="1" max="500" step="any" placeholder="e.g. 75" required>
+
+        <label for="heightUnit">Height Unit</label>
+        <select id="heightUnit">
+          <option value="cm">Centimetres (cm)</option>
+          <option value="ft">Feet and Inches (ft/in)</option>
+        </select>
+
+        <div id="cmField">
+          <label for="heightCm">Height (centimetres)</label>
+          <input type="number" id="heightCm" min="50" max="300" step="any" placeholder="e.g. 175">
+        </div>
+
+        <div id="ftField" style="display:none;">
+          <label for="heightFeet">Feet</label>
+          <input type="number" id="heightFeet" min="0" max="8" step="1" placeholder="e.g. 5">
+
+          <label for="heightInches">Inches</label>
+          <input type="number" id="heightInches" min="0" max="11.99" step="any" placeholder="e.g. 9">
+        </div>
+
+        <button type="submit">Calculate BMI</button>
+      </form>
+
+      <div class="result" id="bmiResult" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>What Is BMI?</h2>
+      <p>Body Mass Index (BMI) is a calculation based on weight and height. For most adults, it can be used as a general screening tool, but it does not directly measure body fat or overall health.</p>
+
+      <h2>Adult BMI Categories</h2>
+      <ul>
+        <li>Below 18.5: Underweight</li>
+        <li>18.5 to 24.9: Healthy weight range</li>
+        <li>25 to 29.9: Overweight</li>
+        <li>30 or above: Obesity range</li>
+      </ul>
+
+      <p class="note">These categories are general adult screening ranges. BMI should not be used alone to diagnose a health condition, and different guidance may apply to children and teenagers.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 AllToolsHub</p>
+    <a href="index.html">Home</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms</a>
+  </footer>
+
+  <script>
+    const heightUnit = document.getElementById("heightUnit");
+    const cmField = document.getElementById("cmField");
+    const ftField = document.getElementById("ftField");
+    const heightCm = document.getElementById("heightCm");
+    const heightFeet = document.getElementById("heightFeet");
+    const heightInches = document.getElementById("heightInches");
+
+    heightUnit.addEventListener("change", function() {
+      const useFeet = heightUnit.value === "ft";
+      cmField.style.display = useFeet ? "none" : "block";
+      ftField.style.display = useFeet ? "block" : "none";
+      heightCm.required = !useFeet;
+      heightFeet.required = useFeet;
+      heightInches.required = useFeet;
+    });
+
+    document.getElementById("bmiForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const weight = Number(document.getElementById("weight").value);
+      let height = 0;
+
+      if (!Number.isFinite(weight) || weight <= 0 || weight > 500) {
+        showResult("Please enter a valid weight in kilograms.");
+        return;
+      }
+
+      if (heightUnit.value === "cm") {
+        const cm = Number(heightCm.value);
+
+        if (!heightCm.value || !Number.isFinite(cm) || cm < 50 || cm > 300) {
+          showResult("Please enter a valid height in centimetres.");
+          return;
+        }
+
+        height = cm / 100;
+      } else {
+        const feetValue = heightFeet.value;
+        const inchesValue = heightInches.value;
+        const feet = Number(feetValue);
+        const inches = Number(inchesValue);
+
+        if (
+          feetValue === "" || inchesValue === "" ||
+          !Number.isFinite(feet) || !Number.isFinite(inches) ||
+          feet < 0 || feet > 8 || inches < 0 || inches >= 12 ||
+          (feet === 0 && inches === 0)
+        ) {
+          showResult("Please enter a valid height in feet and inches.");
+          return;
+        }
+
+        height = (feet * 12 + inches) * 0.0254;
+      }
+
+      const bmi = weight / (height * height);
+      let category = "";
+
+      if (bmi < 18.5) category = "Underweight";
+      else if (bmi < 25) category = "Healthy weight range";
+      else if (bmi < 30) category = "Overweight";
+      else category = "Obesity range";
+
+      showResult("Your BMI is " + bmi.toFixed(1) + ". Category: " + category + ".");
+    });
+
+    function showResult(message) {
+      const result = document.getElementById("bmiResult");
+      result.style.display = "block";
+      result.textContent = message;
+    }
+  </script>
+</body>
+            </html>
