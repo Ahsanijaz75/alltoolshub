@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Age Calculator - Calculate Your Exact Age | AllToolsHub</title>
+  <meta name="description" content="Calculate your exact age in years, months and days with our free online age calculator. Easy to use on mobile and desktop.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ahsanijaz75.github.io/alltoolshub/age-calculator.html">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1769e0;
+      color: white;
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; }
+
+    nav {
+      background: white;
+      padding: 13px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a, footer a {
+      color: #1769e0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    h2 { color: #1769e0; margin-top: 0; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 6px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 7px;
+    }
+
+    input { border: 1px solid #ccc; }
+
+    button {
+      margin-top: 16px;
+      border: none;
+      background: #1769e0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #0d50b5; }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 15px;
+      background: #eaf3ff;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .result strong { color: #124da5; }
+
+    .note { color: #555; font-size: 14px; }
+
+    footer {
+      text-align: center;
+      padding: 22px 12px;
+      background: #e9eef6;
+      margin-top: 30px;
+    }
+
+    footer a { margin: 0 6px; }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 23px; }
+      .card { padding: 17px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Age Calculator</h1>
+    <p>Calculate your age in years, months and days for free.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">← Back to AllToolsHub Home</a>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2>Calculate Your Exact Age</h2>
+      <p>Enter your date of birth to calculate your age as of today.</p>
+
+      <form id="ageForm">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" required>
+        <button type="submit">Calculate My Age</button>
+      </form>
+
+      <div class="result" id="ageResult" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>How to Use the Age Calculator</h2>
+      <ol>
+        <li>Select your date of birth.</li>
+        <li>Click the Calculate My Age button.</li>
+        <li>Your age will appear in years, months and days.</li>
+      </ol>
+
+      <h2>Why Use This Calculator?</h2>
+      <p>This free online age calculator helps you calculate your age quickly without doing the maths yourself. It works on mobile phones, tablets and computers.</p>
+
+      <p class="note">Your date of birth is processed in your browser and is not sent to a server by this calculator.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 AllToolsHub</p>
+    <a href="index.html">Home</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms</a>
+  </footer>
+
+  <script>
+    function showAgeResult(message) {
+      const box = document.getElementById("ageResult");
+      box.style.display = "block";
+      box.textContent = message;
+    }
+
+    document.getElementById("ageForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const value = document.getElementById("dob").value;
+
+      if (!value) {
+        showAgeResult("Please select your date of birth.");
+        return;
+      }
+
+      const parts = value.split("-").map(Number);
+      const birth = new Date(parts[0], parts[1] - 1, parts[2]);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (birth > today) {
+        showAgeResult("Date of birth cannot be in the future.");
+        return;
+      }
+
+      let years = today.getFullYear() - birth.getFullYear();
+      let months = today.getMonth() - birth.getMonth();
+      let days = today.getDate() - birth.getDate();
+
+      if (days < 0) {
+        months--;
+        const previousMonthDays = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        ).getDate();
+        days += previousMonthDays;
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      showAgeResult(
+        "Your age is " + years + " years, " +
+        months + " months and " + days + " days."
+      );
+    });
+  </script>
+</body>
+  </html>
