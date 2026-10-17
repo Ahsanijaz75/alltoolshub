@@ -413,7 +413,7 @@ async function shareQR(){
     [passwordChars[i], passwordChars[j]] =
       [passwordChars[j], passwordChars[i]];
  }
-  }
+  
 
   result.value = passwordChars.join('');
   message.textContent = 'Password generated successfully.';
