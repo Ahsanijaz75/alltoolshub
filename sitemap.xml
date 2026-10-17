@@ -1,7 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ahsanijaz75.github.io/alltoolshub/</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/percentage-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/age-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/bmi-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/word-counter.html</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/qr-code-generator.html</loc>
+  </url>
+  <url>
+    <loc>https://ahsanijaz75.github.io/alltoolshub/password-generator.html</loc>
   </url>
   <url>
     <loc>https://ahsanijaz75.github.io/alltoolshub/about.html</loc>
