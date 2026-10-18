@@ -147,6 +147,52 @@
         padding: 17px;
       }
     }
+    /* Navigation menu */
+.menu-area {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  text-align: left;
+  position: relative;
+}
+
+.menu-button {
+  width: auto;
+  margin: 0;
+  padding: 10px 15px;
+  font-size: 25px;
+  background: #1457d9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.menu-links {
+  display: none;
+  background: white;
+  border-radius: 10px;
+  margin-top: 8px;
+  padding: 8px;
+  box-shadow: 0 3px 12px #00000018;
+}
+
+.menu-links.open {
+  display: block;
+}
+
+.menu-links a {
+  display: block;
+  padding: 12px;
+  color: #1457d9;
+  text-decoration: none;
+  border-bottom: 1px solid #eeeeee;
+  overflow-wrap: anywhere;
+}
+
+.menu-links a:last-child {
+  border-bottom: none;
+      }
   </style>
 </head>
 
@@ -156,10 +202,21 @@
     <p>Calculate percentages quickly and for free.</p>
   </header>
 
-  <nav>
-    <a href="index.html">← Back to AllToolsHub Home</a>
+  <nav class="menu-area">
+  <button class="menu-button" onclick="toggleMenu()" aria-label="Open navigation menu" aria-expanded="false">☰</button>  <div class="menu-links" id="menuLinks">
+    <a href="index.html">Home</a>
+    <a href="percentage-calculator.html">Percentage Calculator</a>
+    <a href="age-calculator.html">Age Calculator</a>
+    <a href="bmi-calculator.html">BMI Calculator</a>
+    <a href="word-counter.html">Word Counter</a>
+    <a href="qr-code-generator.html">QR Code Generator</a>
+    <a href="password-generator.html">Password Generator</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms and Conditions</a>
+  </div>
   </nav>
-
   <main>
     <section class="card">
       <h2>Calculate a Percentage</h2>
