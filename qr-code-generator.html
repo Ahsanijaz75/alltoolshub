@@ -266,6 +266,18 @@ document.getElementById("clearBtn").addEventListener("click", function() {
   qrText.focus();
 });
 </script>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('menuLinks');
+  const button = document.querySelector('.menu-button');
 
+  menu.classList.toggle('open');
+
+  button.setAttribute(
+    'aria-expanded',
+    menu.classList.contains('open')
+  );
+}
+</script>
 </body>
   </html>
