@@ -160,6 +160,42 @@
 .menu-links a:last-child {
   border-bottom: none;
   }
+    .info-box {
+  background: #ffffff;
+  border: 1px solid #dbe5f0;
+  border-radius: 12px;
+  margin: 18px 0;
+  overflow: hidden;
+  box-shadow: 0 3px 10px #0000000d;
+}
+
+.info-box summary {
+  background: #eef5ff;
+  color: #1457d9;
+  padding: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  list-style: none;
+}
+
+.info-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.info-box summary::after {
+  content: "+";
+  float: right;
+  font-size: 20px;
+}
+
+.info-box[open] summary::after {
+  content: "−";
+}
+
+.info-content {
+  padding: 16px;
+  line-height: 1.7;
+        }
   </style>
 </head>
 
