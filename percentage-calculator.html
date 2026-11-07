@@ -193,6 +193,42 @@
 .menu-links a:last-child {
   border-bottom: none;
       }
+    /* Collapsible information sections */
+.info-box {
+    background: #fff;
+    border: 1px solid #dce6f2;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.info-box summary {
+    background: #eaf3ff;
+    color: #1457d9;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+}
+
+.info-box summary::-webkit-details-marker {
+    display: none;
+}
+
+.info-box summary::after {
+    content: "+";
+    float: right;
+    font-size: 22px;
+}
+
+.info-box[open] summary::after {
+    content: "−";
+}
+
+.info-content {
+    padding: 15px;
+      }
   </style>
 </head>
 
